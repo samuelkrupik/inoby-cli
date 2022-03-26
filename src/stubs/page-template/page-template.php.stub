@@ -1,0 +1,17 @@
+<?php
+/**
+ * Template Name: {%title%}
+ */
+
+inoby_enqueue_parted_style("{%name%}", "page_templates");
+inoby_enqueue_parted_script("{%name%}", "page_templates");
+
+/**
+ * Base prefix for meta keys
+ */
+$prefix = "{%name%}";
+
+/**
+ * Data
+ */
+$hero_images = rwmb_meta("{$prefix}_hero_image");

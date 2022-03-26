@@ -1,0 +1,36 @@
+<?php
+
+add_filter("rwmb_meta_boxes", function ($metaboxes) {
+  
+    $prefix = "{%name%}";
+
+    $top_fields = [
+      [
+          "id" => "{$prefix}_hero_image",
+          "name" => __("Nadpis", "inoby"),
+          "type" => "text",
+          "tab" => "top",
+      ],
+    ];
+
+    $metaboxes[] = [
+        "id" => "{%name%}",
+        "title" => __("{%title%}", "inoby"),
+        "post_types" => ["page"],
+        "context" => "normal",
+        "priority" => "default",
+        "autosave" => "false",
+        "tab_style" => "left",
+        "show" => [
+            "template" => ["page-templates/{%name%}.php"],
+        ],
+        "tabs" => [
+            "top" => [
+                "label" => __("Úvod", "inoby"),
+            ],
+        ],
+        "fields" => [...$top_fields],
+    ];
+
+    return $metaboxes;
+});
