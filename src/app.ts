@@ -1,12 +1,11 @@
 import yargs from "yargs";
 import { Command } from "./command";
 import { MakePageTemplateCommand } from "./make-page-template-command";
-
 export class CodeGenerator {
   private static instance: CodeGenerator;
   private commands: Command[] = [new MakePageTemplateCommand()];
 
-  public static getInstance() {
+  public static getInstance(): CodeGenerator {
     if (!CodeGenerator.instance) {
       CodeGenerator.instance = new CodeGenerator();
     }
@@ -27,8 +26,6 @@ export class CodeGenerator {
   }
 
   private registerCommands(args: yargs.Argv): yargs.Argv {
-    console.log(this.commands);
-
     this.commands.forEach((command) => {
       args.command(
         command.signature,
@@ -42,14 +39,10 @@ export class CodeGenerator {
           );
           yargs.version(false);
         },
-        this.handler
+        command.handler
       );
     });
 
     return args;
-  }
-
-  private handler(argv: any) {
-    console.log(JSON.stringify(argv));
   }
 }

@@ -2,6 +2,9 @@ import { Command } from "./command";
 import { CommandArgument, CommandOption } from "./types";
 
 export class MakePageTemplateCommand extends Command {
+  public getStubPath(): string {
+    return this.stubPath;
+  }
   public signature: string = "make:template <name> <title>";
   public description: string = "Generate page template";
 
@@ -28,5 +31,5 @@ export class MakePageTemplateCommand extends Command {
     },
   ];
 
-  protected stubPath: string = "./stubs/page-template";
+  protected stubPath: string = "./stubs/page-template/page-template.php.stub";
 }
