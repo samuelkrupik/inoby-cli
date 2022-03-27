@@ -39,7 +39,10 @@ export class CodeGenerator {
           );
           yargs.version(false);
         },
-        command.handler
+        (args: yargs.ArgumentsCamelCase) => {
+          command.setArgs(args);
+          command.handler();
+        }
       );
     });
 

@@ -25,11 +25,15 @@ export class MakePageTemplateCommand extends Command {
     {
       name: "out",
       demandOption: false,
-      default: "./page-templates/<name>",
+      default: "./page-templates",
       description: "Output directory",
       alias: "o",
     },
   ];
 
-  protected stubPath: string = "./stubs/page-template/page-template.php.stub";
+  protected stubPath: string = "./stubs/page-template/";
+
+  public handler(): void {
+    super.handler();
+  }
 }

@@ -1,4 +1,4 @@
-import { Options, PositionalOptions } from "yargs";
+import yargs, { Options, PositionalOptions } from "yargs";
 import { CodeGenerator } from "./app";
 import { CommandArgument, CommandOption } from "./types";
 import fs from "fs";
@@ -12,42 +12,84 @@ abstract class Command {
   protected abstract stubPath: string;
   public abstract arguments: CommandArgument[];
   public abstract options: CommandOption[];
+  protected args: yargs.ArgumentsCamelCase | null = null;
 
-  public register(): void {
-    const app = CodeGenerator.getInstance();
+  public setArgs(args: yargs.ArgumentsCamelCase): void {
+    this.args = args;
   }
 
   protected getStubFileContents() {}
 
   public abstract getStubPath(): string;
 
-  private outName(): string {
-    return path.basename(this.stubPath, ".stub");
+  protected stripStubExt(fileName: string): string {
+    return path.basename(fileName, ".stub");
   }
 
-  public handler = (argv: any) => {
-    const stubPath = path.resolve(rootDir, this.stubPath);
-    // try {
-    let fileContents = fs.readFileSync(stubPath).toString();
+  protected getAbsoluteStubPath(): string {
+    return path.resolve(rootDir, this.stubPath);
+  }
+
+  protected outPath(filePath: string): string {
+    const outDirBase = path.join(process.cwd(), this.args?.out as string);
+    const absStubPath = this.getAbsoluteStubPath();
+
+    const outPath = path.join(outDirBase, filePath.replace(absStubPath, ""));
+
+    return this.replace(outPath);
+  }
+
+  protected walk(dir: string, callback: (file: string) => void) {
+    fs.readdirSync(dir).forEach((entry) => {
+      let entryPath = path.join(dir, entry);
+      fs.statSync(entryPath).isDirectory()
+        ? this.walk(entryPath, callback)
+        : callback(entryPath);
+    });
+  }
+
+  protected replace(content: string): string {
     this.arguments.forEach((argument) => {
       const replacer = new RegExp(`{%${argument.name}%}`, "g");
-      fileContents = fileContents.replace(replacer, argv[argument.name]);
+      content = content.replace(
+        replacer,
+        this.args ? (this.args[argument.name] as string) : ""
+      );
     });
-    const outDir = path.resolve(
-      process.cwd(),
-      argv.out.replace("<name>", argv.name)
-    );
+
+    return content;
+  }
+
+  protected replaceAndCreate(file: string): void {
+    let fileContents = fs.readFileSync(file).toString();
+    const outPath = this.outPath(file);
+    const outDir = path.dirname(outPath);
     if (!fs.existsSync(outDir)) {
       fs.mkdirSync(outDir, { recursive: true });
     }
 
-    fs.writeFileSync(path.resolve(outDir, this.outName()), fileContents, {
-      flag: "w+",
-    });
-    // } catch (error) {
-    //   console.error("File %s does not exists!", stubPath);
-    // }
-  };
+    fileContents = this.replace(fileContents);
+
+    fs.writeFileSync(
+      path.join(outDir, path.basename(outPath, ".stub")),
+      fileContents,
+      {
+        flag: "w+",
+      }
+    );
+  }
+
+  /**
+   * When handler is called this.args are already set
+   */
+  public handler(): void {
+    const absStubPath = this.getAbsoluteStubPath();
+    if (fs.statSync(absStubPath).isDirectory()) {
+      this.walk(absStubPath, this.replaceAndCreate.bind(this));
+    } else {
+      this.replaceAndCreate(absStubPath);
+    }
+  }
 }
 
 export { Command };
