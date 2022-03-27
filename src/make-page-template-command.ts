@@ -2,11 +2,9 @@ import { Command } from "./command";
 import { CommandArgument, CommandOption } from "./types";
 
 export class MakePageTemplateCommand extends Command {
-  public getStubPath(): string {
-    return this.stubPath;
-  }
   public signature: string = "make:template <name> <title>";
   public description: string = "Generate page template";
+  protected stubPath: string = "./stubs/page-template/";
 
   public arguments: CommandArgument[] = [
     {
@@ -21,17 +19,10 @@ export class MakePageTemplateCommand extends Command {
     },
   ];
 
-  public options: CommandOption[] = [
-    {
-      name: "out",
-      demandOption: false,
-      default: "./page-templates",
-      description: "Output directory",
-      alias: "o",
-    },
-  ];
-
-  protected stubPath: string = "./stubs/page-template/";
+  public constructor() {
+    super();
+    super.setDefaultOutDir("./page-templates");
+  }
 
   public handler(): void {
     super.handler();

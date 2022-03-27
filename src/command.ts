@@ -11,16 +11,31 @@ abstract class Command {
   public abstract description: string;
   protected abstract stubPath: string;
   public abstract arguments: CommandArgument[];
-  public abstract options: CommandOption[];
+  public options: CommandOption[] = [
+    {
+      name: "out",
+      demandOption: false,
+      default: "./",
+      description: "Output directory",
+      alias: "o",
+    },
+  ];
+
+  protected setDefaultOutDir(dir: string): boolean {
+    const opt = this.options.find((opt) => opt.name === "out");
+    if (opt) {
+      opt.default = "./page-templates";
+      return true;
+    }
+
+    return false;
+  }
+
   protected args: yargs.ArgumentsCamelCase | null = null;
 
   public setArgs(args: yargs.ArgumentsCamelCase): void {
     this.args = args;
   }
-
-  protected getStubFileContents() {}
-
-  public abstract getStubPath(): string;
 
   protected stripStubExt(fileName: string): string {
     return path.basename(fileName, ".stub");
@@ -33,7 +48,6 @@ abstract class Command {
   protected outPath(filePath: string): string {
     const outDirBase = path.join(process.cwd(), this.args?.out as string);
     const absStubPath = this.getAbsoluteStubPath();
-
     const outPath = path.join(outDirBase, filePath.replace(absStubPath, ""));
 
     return this.replace(outPath);
