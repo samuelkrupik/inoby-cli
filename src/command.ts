@@ -119,7 +119,7 @@ abstract class Command {
       );
       this.modifiers.forEach((modifier) => {
         content = content.replace(
-          new RegExp(`{%${argument.name}:${modifier.name}%}`, "g"),
+          new RegExp(`{%${argument.name}.${modifier.name}%}`, "g"),
           modifier.callback(
             this.args ? (this.args[argument.name] as string) : ""
           )
