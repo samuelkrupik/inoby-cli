@@ -2,7 +2,7 @@
 
 add_filter("rwmb_meta_boxes", function ($metaboxes) {
   
-    $prefix = "{%name%}";
+    $prefix = "{%name:snake%}";
 
     $top_fields = [
       [

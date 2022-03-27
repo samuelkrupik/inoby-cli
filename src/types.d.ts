@@ -7,3 +7,8 @@ export interface CommandArgument extends PositionalOptions {
 export interface CommandOption extends Options {
   name: string;
 }
+
+export interface Modififier {
+  name: string;
+  callback: (str: string) => string;
+}

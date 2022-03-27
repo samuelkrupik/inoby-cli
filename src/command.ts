@@ -1,10 +1,10 @@
 import yargs, { Options, PositionalOptions } from "yargs";
 import { CodeGenerator } from "./app";
-import { CommandArgument, CommandOption } from "./types";
+import { CommandArgument, CommandOption, Modififier } from "./types";
 import fs from "fs";
 import path from "path";
 
-export const rootDir = path.resolve(__dirname, "../");
+const rootDir = path.resolve(__dirname, "../");
 
 abstract class Command {
   public abstract signature: string;
@@ -18,6 +18,55 @@ abstract class Command {
       default: "./",
       description: "Output directory",
       alias: "o",
+    },
+  ];
+
+  protected modifiers: Modififier[] = [
+    {
+      name: "camel",
+      callback: function (str: string) {
+        return str
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]+(.)/g, (match, chr) => chr.toUpperCase());
+      },
+    },
+    {
+      name: "pascal",
+      callback: function (str: string) {
+        return (" " + str)
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9]+(.)/g, (match, chr) => chr.toUpperCase());
+      },
+    },
+    {
+      name: "lower",
+      callback: function (str: string) {
+        return str.toLowerCase();
+      },
+    },
+    {
+      name: "upper",
+      callback: function (str: string) {
+        return str.toUpperCase();
+      },
+    },
+    {
+      name: "dash",
+      callback: function (str: string) {
+        return str.replace(/[\s_]+/g, "-").toLowerCase();
+      },
+    },
+    {
+      name: "snake",
+      callback: function (str: string) {
+        return str.replace(/[\s-]+/g, "_").toLowerCase();
+      },
+    },
+    {
+      name: "screaming-snake",
+      callback: function (str: string) {
+        return str.replace(/[\s-]+/g, "_").toUpperCase();
+      },
     },
   ];
 
@@ -64,11 +113,18 @@ abstract class Command {
 
   protected replace(content: string): string {
     this.arguments.forEach((argument) => {
-      const replacer = new RegExp(`{%${argument.name}%}`, "g");
       content = content.replace(
-        replacer,
+        new RegExp(`{%${argument.name}%}`, "g"),
         this.args ? (this.args[argument.name] as string) : ""
       );
+      this.modifiers.forEach((modifier) => {
+        content = content.replace(
+          new RegExp(`{%${argument.name}:${modifier.name}%}`, "g"),
+          modifier.callback(
+            this.args ? (this.args[argument.name] as string) : ""
+          )
+        );
+      });
     });
 
     return content;
@@ -106,4 +162,4 @@ abstract class Command {
   }
 }
 
-export { Command };
+export { Command, rootDir };
