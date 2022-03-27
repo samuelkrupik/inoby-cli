@@ -1,5 +1,5 @@
 import { Command } from "./command";
-import { CommandArgument, CommandOption } from "./types";
+import { CommandArgument } from "./types";
 
 export class MakePageTemplateCommand extends Command {
   public signature: string = "make:template <name> <title>";

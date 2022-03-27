@@ -1,5 +1,4 @@
-import yargs, { Options, PositionalOptions } from "yargs";
-import { CodeGenerator } from "./app";
+import { ArgumentsCamelCase } from "yargs";
 import { CommandArgument, CommandOption, Modififier } from "./types";
 import fs from "fs";
 import path from "path";
@@ -80,9 +79,9 @@ abstract class Command {
     return false;
   }
 
-  protected args: yargs.ArgumentsCamelCase | null = null;
+  protected args: ArgumentsCamelCase | null = null;
 
-  public setArgs(args: yargs.ArgumentsCamelCase): void {
+  public setArgs(args: ArgumentsCamelCase): void {
     this.args = args;
   }
 
