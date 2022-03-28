@@ -73,7 +73,7 @@ abstract class Command {
   protected setDefaultOutDir(dir: string): boolean {
     const opt = this.options.find((opt) => opt.name === "out");
     if (opt) {
-      opt.default = "./page-templates";
+      opt.default = dir;
       return true;
     }
 
