@@ -1,9 +1,13 @@
 import yargs from "yargs";
 import { Command } from "./command";
+import { MakeCommandCommand } from "./make-command-command";
 import { MakePageTemplateCommand } from "./make-page-template-command";
 export class CodeGenerator {
   private static instance: CodeGenerator;
-  private commands: Command[] = [new MakePageTemplateCommand()];
+  private commands: Command[] = [
+    new MakePageTemplateCommand(),
+    new MakeCommandCommand(),
+  ];
 
   public static getInstance(): CodeGenerator {
     if (!CodeGenerator.instance) {
