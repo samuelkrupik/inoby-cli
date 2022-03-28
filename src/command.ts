@@ -2,6 +2,7 @@ import { ArgumentsCamelCase } from "yargs";
 import { CommandArgument, CommandOption, Modififier } from "./types";
 import fs from "fs";
 import path from "path";
+import chalk from "chalk";
 
 const rootDir = path.resolve(__dirname, "../");
 
@@ -139,11 +140,22 @@ abstract class Command {
 
     fileContents = this.replace(fileContents);
 
-    fs.writeFileSync(
-      path.join(outDir, path.basename(outPath, ".stub")),
+    const filePath = path.join(outDir, path.basename(outPath, ".stub"));
+    fs.writeFile(
+      filePath,
       fileContents,
       {
         flag: "w+",
+      },
+      (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(
+            chalk.bold.green("Created file: ") + chalk.underline.cyan("%s"),
+            path.relative(process.cwd(), filePath)
+          );
+        }
       }
     );
   }
@@ -153,7 +165,11 @@ abstract class Command {
    */
   public handler(): void {
     const absStubPath = this.getAbsoluteStubPath();
-    if (fs.statSync(absStubPath).isDirectory()) {
+    if (!fs.existsSync(absStubPath)) {
+      console.log(chalk.red("Stub path does not exists! %s"), absStubPath);
+      return;
+    }
+    if (fs.existsSync(absStubPath) && fs.statSync(absStubPath).isDirectory()) {
       this.walk(absStubPath, this.replaceAndCreate.bind(this));
     } else {
       this.replaceAndCreate(absStubPath);
