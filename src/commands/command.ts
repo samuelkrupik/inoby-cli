@@ -10,13 +10,14 @@ abstract class Command {
   public abstract signature: string;
   public abstract description: string;
   protected abstract stubPath: string;
+  protected outDir: string = "./";
   public enabled: boolean = true;
   public abstract arguments: CommandArgument[];
   public options: CommandOption[] = [
     {
       name: "out",
       demandOption: false,
-      default: "./",
+      default: this.outDir,
       description: "Output directory",
       alias: "o",
     },
@@ -81,7 +82,13 @@ abstract class Command {
     },
   ];
 
+  protected addOption(option: CommandOption): Command {
+    this.options.push(option);
+    return this;
+  }
+
   protected setDefaultOutDir(dir: string): boolean {
+    this.outDir = dir;
     const opt = this.options.find((opt) => opt.name === "out");
     if (opt) {
       opt.default = dir;
@@ -105,8 +112,15 @@ abstract class Command {
     return path.resolve(rootDir, this.stubPath);
   }
 
+  protected getOutDir(): string {
+    return path.join(
+      process.cwd(),
+      this.args ? (this.args.out as string) : this.outDir
+    );
+  }
+
   protected outPath(filePath: string): string {
-    const outDirBase = path.join(process.cwd(), this.args?.out as string);
+    const outDirBase = this.getOutDir();
     const absStubPath = this.getAbsoluteStubPath();
     const outPath = path.join(outDirBase, filePath.replace(absStubPath, ""));
 
@@ -181,12 +195,16 @@ abstract class Command {
         if (err) {
           console.log(err);
         } else {
-          console.log(
-            chalk.bold.green("Created file: ") + chalk.underline.cyan("%s"),
-            path.relative(process.cwd(), filePath)
-          );
+          this.createdFile(filePath);
         }
       }
+    );
+  }
+
+  protected createdFile(file: string): void {
+    console.log(
+      chalk.bold.green("Created file: ") + chalk.underline.cyan("%s"),
+      path.relative(process.cwd(), file)
     );
   }
 
