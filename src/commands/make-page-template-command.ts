@@ -2,7 +2,6 @@ import { Command } from "./command";
 import { CommandArgument } from "../types";
 import fs from "fs";
 import path from "path";
-// import { boolean } from "yargs";
 
 export default class extends Command {
   public signature: string = "make:template <page-template> <template-name>";
