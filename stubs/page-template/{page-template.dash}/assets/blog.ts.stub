@@ -1,0 +1,10 @@
+import { InobyModule } from "@lib/inoby-module";
+// import * as $ from "jquery";/
+
+class {page-template.pascal} extends InobyModule {
+  run() {
+    //
+  }
+}
+
+new {page-template.pascal}().runOnReady();

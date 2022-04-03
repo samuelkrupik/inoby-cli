@@ -2,7 +2,7 @@
 
 get_header(); ?>
 
-<section class="{%post-type.dash%} {%post-type.dash%}-single">
+<section class="{post-type.dash} {post-type.dash}-single">
   <div class="container">
     <h1>
       <?php the_title(); ?>

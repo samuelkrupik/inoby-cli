@@ -1,0 +1,36 @@
+<?php
+/**
+ * Template Name: {template-name}
+ */
+
+inoby_enqueue_parted_style("{name.snake}", "page_templates");
+inoby_enqueue_parted_script("{name.snake}", "page_templates");
+
+/**
+ * Base prefix for meta keys
+ */
+$prefix = "{page-template.dash}";
+
+/**
+ * Top section data
+ */
+$top_headline = rwmb_meta("$prefix-top-headline");
+
+get_header();
+
+?>
+
+<div class="page-template {page-template.dash}">
+
+  <?php if(!empty($top_headline)) : ?>
+    <section class="top">
+      <div class="container">
+        <h1>
+          <?= $top_headline ?>
+        </h1>
+      </div>
+    </section>
+  <?php endif; ?>
+</div>
+
+<?php get_footer();

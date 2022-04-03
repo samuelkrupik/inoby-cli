@@ -1,12 +1,15 @@
 <?php
+/**
+ * {template-name} metaboxes
+ */
 
 add_filter("rwmb_meta_boxes", function ($metaboxes) {
   
-    $prefix = "{%name.snake%}";
+    $prefix = "{page-template.dash}";
 
     $top_fields = [
       [
-          "id" => "{$prefix}_hero_image",
+          "id" => "$prefix-top-headline",
           "name" => __("Nadpis", "inoby"),
           "type" => "text",
           "tab" => "top",
@@ -14,15 +17,15 @@ add_filter("rwmb_meta_boxes", function ($metaboxes) {
     ];
 
     $metaboxes[] = [
-        "id" => "{%name%}",
-        "title" => __("{%title%}", "inoby"),
+        "id" => "{name}",
+        "title" => __("{template-name}", "inoby"),
         "post_types" => ["page"],
         "context" => "normal",
         "priority" => "default",
         "autosave" => "false",
         "tab_style" => "left",
         "show" => [
-            "template" => ["page-templates/{%name%}.php"],
+            "template" => ["page-templates/{page-template.dash}.php"],
         ],
         "tabs" => [
             "top" => [

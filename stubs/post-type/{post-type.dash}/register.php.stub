@@ -1,19 +1,19 @@
 <?php
 
-if (!function_exists("inoby_register_post_type_{%post-type.snake%}")) {
-    function inoby_register_post_type_{%post-type.snake%}() {
+if (!function_exists("inoby_register_post_type_{post-type.snake}")) {
+    function inoby_register_post_type_{post-type.snake}() {
         $labels = [
-            "name" => __("{%name.plural%}", "inoby"),
-            "singular_name" => __("{%name%}", "inoby"),
-            "menu_name" => __("{%name.plural%}", "inoby"),
-            "parent_item_colon" => __("Nadradená {%name.lower%}", "inoby"),
-            "all_items" => __("Všetky {%name.plural.lower%}", "inoby"),
-            "view_item" => __("Pozrieť {%name.lower%}", "inoby"),
-            "add_new_item" => __("Pridať novú {%name.lower%}", "inoby"),
+            "name" => __("{name.plural}", "inoby"),
+            "singular_name" => __("{name}", "inoby"),
+            "menu_name" => __("{name.plural}", "inoby"),
+            "parent_item_colon" => __("Nadradená {name.lower}", "inoby"),
+            "all_items" => __("Všetky {name.plural.lower}", "inoby"),
+            "view_item" => __("Pozrieť {name.lower}", "inoby"),
+            "add_new_item" => __("Pridať novú {name.lower}", "inoby"),
             "add_new" => __("Pridať novú", "inoby"),
-            "edit_item" => __("Upraviť {%name.lower%}", "inoby"),
-            "update_item" => __("Aktualizovať {%name.lower%}", "inoby"),
-            "search_items" => __("Hladať {%name.lower%}", "inoby"),
+            "edit_item" => __("Upraviť {name.lower}", "inoby"),
+            "update_item" => __("Aktualizovať {name.lower}", "inoby"),
+            "search_items" => __("Hladať {name.lower}", "inoby"),
             "not_found" => __("Nič sa nenašlo", "inoby"),
             "not_found_in_trash" => __("Nič sa nenašlo v koši", "inoby"),
         ];
@@ -37,12 +37,12 @@ if (!function_exists("inoby_register_post_type_{%post-type.snake%}")) {
             "publicly_queryable" => true,
             "capability_type" => "page",
             "rewrite" => [
-                "slug" => "{%post-type.dash%}",
+                "slug" => "{post-type.dash}",
             ],
         ];
 
-        register_post_type("{%post-type.dash%}", $args);
+        register_post_type("{post-type.dash}", $args);
     }
 }
 
-add_action("init", "inoby_register_post_type_{%post-type.snake%}");
+add_action("init", "inoby_register_post_type_{post-type.snake}");

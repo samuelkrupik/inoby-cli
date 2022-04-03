@@ -1,6 +1,6 @@
 @import "variables";
 @import "mixins";
 
-section.{%post-type.dash%}-single {
+section.{post-type.dash}-single {
   //
 }

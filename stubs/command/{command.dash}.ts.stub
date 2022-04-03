@@ -1,7 +1,7 @@
 import { Command } from "./command";
 import { CommandArgument } from "../types";
 
-export default class {%command.pascal%} extends Command {
+export default class {command.pascal} extends Command {
   public signature: string = "make:command <name>";
   public description: string = "Command";
   protected stubPath: string = "./stubs/command/";

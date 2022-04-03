@@ -72,7 +72,7 @@ abstract class Command {
     {
       name: "plural",
       callback: function (str: string) {
-        if (str.slice(-2, -1) === "a") {
+        if (str.endsWith("a")) {
           return str.slice(0, -1) + "y";
         } else {
           return str + "y";
@@ -126,7 +126,7 @@ abstract class Command {
     let replaced = content;
     this.arguments.forEach((argument) => {
       const regex = new RegExp(
-        `{%${argument.name}(?<delimeter>\.?)(?<modifiers>.*)%}`,
+        `{\s?${argument.name}(?<delimeter>\.?)(?<modifiers>.*)\s?}`,
         "g"
       );
 
