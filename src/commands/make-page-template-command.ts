@@ -1,7 +1,7 @@
 import { Command } from "./command";
-import { CommandArgument } from "./types";
+import { CommandArgument } from "../types";
 
-export class MakePageTemplateCommand extends Command {
+export default class extends Command {
   public signature: string = "make:template <name> <title>";
   public description: string = "Generate page template";
   protected stubPath: string = "./stubs/page-template/";

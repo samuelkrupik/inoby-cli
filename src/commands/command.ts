@@ -1,15 +1,16 @@
 import { ArgumentsCamelCase } from "yargs";
-import { CommandArgument, CommandOption, Modififier } from "./types";
+import { CommandArgument, CommandOption, Modififier } from "../types";
 import fs from "fs";
 import path from "path";
 import chalk from "chalk";
 
-const rootDir = path.resolve(__dirname, "../");
+const rootDir = path.resolve(__dirname, "../../");
 
 abstract class Command {
   public abstract signature: string;
   public abstract description: string;
   protected abstract stubPath: string;
+  public enabled: boolean = true;
   public abstract arguments: CommandArgument[];
   public options: CommandOption[] = [
     {
@@ -66,6 +67,12 @@ abstract class Command {
       name: "screaming-snake",
       callback: function (str: string) {
         return str.replace(/[\s-]+/g, "_").toUpperCase();
+      },
+    },
+    {
+      name: "plural",
+      callback: function (str: string) {
+        return str.slice(0, -1) + "y";
       },
     },
   ];

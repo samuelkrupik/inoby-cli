@@ -1,12 +1,16 @@
+import path from "path";
+import fs from "fs";
 import yargs from "yargs";
-import { Command } from "./command";
-import { MakeCommandCommand } from "./make-command-command";
-import { MakePageTemplateCommand } from "./make-page-template-command";
+import { Command } from "./commands/command";
+
 export class CodeGenerator {
   private static instance: CodeGenerator;
+
+  private autoDiscovery: boolean = true;
+
   private commands: Command[] = [
-    new MakePageTemplateCommand(),
-    new MakeCommandCommand(),
+    // new MakePageTemplateCommand(),
+    // new MakeCommandCommand(),
   ];
 
   public static getInstance(): CodeGenerator {
@@ -16,21 +20,53 @@ export class CodeGenerator {
     return CodeGenerator.instance;
   }
 
-  public run() {
-    const args = this.buildArgs();
+  public async run() {
+    const args = await this.buildArgs();
     return args.argv;
   }
 
-  private buildArgs(): yargs.Argv {
-    return this.registerCommands(
-      yargs.scriptName("code-generator").usage("$0 <cmd> [args]")
-    )
+  private async buildArgs(): Promise<yargs.Argv<{}>> {
+    const args = await this.registerCommands();
+
+    return args
+      .scriptName("code-generator")
+      .usage("$0 <cmd> [args]")
       .strict()
       .wrap(yargs.terminalWidth());
   }
 
-  private registerCommands(args: yargs.Argv): yargs.Argv {
+  private async discoverCommands(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      fs.readdir(path.resolve(__dirname, "./commands"), (err, files) => {
+        if (err) {
+          reject(err);
+        } else {
+          files.forEach(async (file, index) => {
+            if (file === "command.js") return;
+            const commandImport = await import("./commands/" + file);
+            const command: Command = new commandImport.default();
+            this.commands.push(command);
+
+            if (index === files.length - 1) {
+              resolve();
+            }
+          });
+        }
+      });
+    });
+  }
+
+  private async registerCommands(): Promise<yargs.Argv<{}>> {
+    if (this.autoDiscovery) {
+      await this.discoverCommands();
+    }
+
+    let args = yargs;
+
     this.commands.forEach((command) => {
+      // check enabled
+      if (!command.enabled) return;
+      // register
       args.command(
         command.signature,
         command.description,

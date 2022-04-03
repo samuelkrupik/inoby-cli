@@ -1,0 +1,48 @@
+<?php
+
+if (!function_exists("inoby_register_post_type_{%post-type.snake%}")) {
+    function inoby_register_post_type_{%post-type.snake%}() {
+        $labels = [
+            "name" => __("{%name.plural%}", "inoby"),
+            "singular_name" => __("{%name%}", "inoby"),
+            "menu_name" => __("{%name.plural%}", "inoby"),
+            "parent_item_colon" => __("Nadradená {%name.lower%}", "inoby"),
+            "all_items" => __("Všetky {%name.plural%}", "inoby"),
+            "view_item" => __("Pozrieť {%name.lower%}", "inoby"),
+            "add_new_item" => __("Pridať novú {%name.lower%}", "inoby"),
+            "add_new" => __("Pridať novú", "inoby"),
+            "edit_item" => __("Upraviť {%name.lower%}", "inoby"),
+            "update_item" => __("Aktualizovať {%name.lower%}", "inoby"),
+            "search_items" => __("Hladať {%name.lower%}", "inoby"),
+            "not_found" => __("Nič sa nenašlo", "inoby"),
+            "not_found_in_trash" => __("Nič sa nenašlo v koši", "inoby"),
+        ];
+
+        $args = [
+            "label" => __("Otázky", "inoby"),
+            "description" => __("Otázky popis", "inoby"),
+            "labels" => $labels,
+            "supports" => ["title", "excerpt", "editor"],
+            "menu_icon" => "dashicons-format-status",
+            "hierarchical" => false,
+            "public" => true,
+            "show_ui" => true,
+            "show_in_menu" => true,
+            "show_in_nav_menus" => true,
+            "show_in_admin_bar" => true,
+            "menu_position" => 5,
+            "can_export" => true,
+            "has_archive" => true,
+            "exclude_from_search" => false,
+            "publicly_queryable" => true,
+            "capability_type" => "page",
+            "rewrite" => [
+                "slug" => "{%post-type.dash%}",
+            ],
+        ];
+
+        register_post_type("{%post-type.dash%}", $args);
+    }
+}
+
+add_action("init", "inoby_register_post_type_{%post-type.snake%}");

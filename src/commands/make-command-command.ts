@@ -1,10 +1,11 @@
 import { Command } from "./command";
-import { CommandArgument } from "./types";
+import { CommandArgument } from "../types";
 
-export class MakeCommandCommand extends Command {
+export default class MakeCommandCommand extends Command {
   public signature: string = "make:command <command>";
   public description: string = "Generate new command";
-  protected stubPath: string = "./stubs/command/";
+  protected stubPath: string = "./stubs/command";
+  public enabled: boolean = true;
 
   public arguments: CommandArgument[] = [
     {
@@ -17,7 +18,7 @@ export class MakeCommandCommand extends Command {
 
   public constructor() {
     super();
-    this.setDefaultOutDir("./src");
+    this.setDefaultOutDir("./src/commands");
   }
 
   public handler(): void {
