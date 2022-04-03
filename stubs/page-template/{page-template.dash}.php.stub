@@ -1,10 +1,10 @@
 <?php
 /**
- * Template Name: {template-name}
+ * Template Name: { template-name }
  */
 
-inoby_enqueue_parted_style("{name.snake}", "page_templates");
-inoby_enqueue_parted_script("{name.snake}", "page_templates");
+inoby_enqueue_parted_style("{page-template.snake}", "page_templates");
+inoby_enqueue_parted_script("{page-template.snake}", "page_templates");
 
 /**
  * Base prefix for meta keys

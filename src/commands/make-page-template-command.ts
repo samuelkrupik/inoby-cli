@@ -2,20 +2,20 @@ import { Command } from "./command";
 import { CommandArgument } from "../types";
 
 export default class extends Command {
-  public signature: string = "make:template <name> <title>";
+  public signature: string = "make:template <page-template> <template-name>";
   public description: string = "Generate page template";
   protected stubPath: string = "./stubs/page-template/";
 
   public arguments: CommandArgument[] = [
     {
-      name: "title",
+      name: "page-template",
       type: "string",
-      describe: "- Title of the page template (e.g. Home page)",
+      describe: "Name of the page template in dash-case (e.g. home-page)",
     },
     {
-      name: "name",
+      name: "template-name",
       type: "string",
-      describe: "- Name of the page template in dash-case (e.g. home-page)",
+      describe: 'Template name (e.g. "Home page")',
     },
   ];
 

@@ -126,7 +126,7 @@ abstract class Command {
     let replaced = content;
     this.arguments.forEach((argument) => {
       const regex = new RegExp(
-        `{\s?${argument.name}(?<delimeter>\.?)(?<modifiers>.*)\s?}`,
+        `{\\s?${argument.name}(?<delimeter>\\.?)(?<modifiers>[^}]*)\\s?}`,
         "g"
       );
 
