@@ -7,7 +7,7 @@ if (!function_exists("inoby_register_post_type_{%post-type.snake%}")) {
             "singular_name" => __("{%name%}", "inoby"),
             "menu_name" => __("{%name.plural%}", "inoby"),
             "parent_item_colon" => __("Nadradená {%name.lower%}", "inoby"),
-            "all_items" => __("Všetky {%name.plural%}", "inoby"),
+            "all_items" => __("Všetky {%name.plural.lower%}", "inoby"),
             "view_item" => __("Pozrieť {%name.lower%}", "inoby"),
             "add_new_item" => __("Pridať novú {%name.lower%}", "inoby"),
             "add_new" => __("Pridať novú", "inoby"),

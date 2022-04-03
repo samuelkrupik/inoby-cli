@@ -72,7 +72,11 @@ abstract class Command {
     {
       name: "plural",
       callback: function (str: string) {
-        return str.slice(0, -1) + "y";
+        if (str.slice(-2, -1) === "a") {
+          return str.slice(0, -1) + "y";
+        } else {
+          return str + "y";
+        }
       },
     },
   ];
@@ -119,22 +123,41 @@ abstract class Command {
   }
 
   protected replace(content: string): string {
+    let replaced = content;
     this.arguments.forEach((argument) => {
-      content = content.replace(
-        new RegExp(`{%${argument.name}%}`, "g"),
-        this.args ? (this.args[argument.name] as string) : ""
+      const regex = new RegExp(
+        `{%${argument.name}(?<delimeter>\.?)(?<modifiers>.*)%}`,
+        "g"
       );
-      this.modifiers.forEach((modifier) => {
-        content = content.replace(
-          new RegExp(`{%${argument.name}.${modifier.name}%}`, "g"),
-          modifier.callback(
-            this.args ? (this.args[argument.name] as string) : ""
-          )
-        );
-      });
+
+      let matches;
+
+      while ((matches = regex.exec(content)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (matches.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+
+        let modified = this.args ? (this.args[argument.name] as string) : "";
+
+        // check if there are modifiers to apply
+        if (matches.groups?.modifiers?.length) {
+          // split modifiers to array and apply each (if exists)
+          matches.groups.modifiers.split(".").forEach((modifier) => {
+            const foundModifier = this.modifiers.find(
+              (registeredModifier) => registeredModifier.name === modifier
+            );
+            if (foundModifier) {
+              modified = foundModifier.callback(modified);
+            }
+          });
+        }
+
+        replaced = replaced.replace(new RegExp(matches[0], "g"), modified);
+      }
     });
 
-    return content;
+    return replaced;
   }
 
   protected replaceAndCreate(file: string): void {

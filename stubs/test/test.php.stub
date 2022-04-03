@@ -1,5 +1,0 @@
-<?php
-
-$a = [
-  "a" => __("{%name.lower.plural%}")
-];
