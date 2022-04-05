@@ -23,10 +23,21 @@ export default class MakePostTypeCommand extends Command {
   public constructor() {
     super();
     super.setDefaultOutDir("./post-types");
+    this.addOption({
+      name: "metaboxes",
+      type: "boolean",
+      alias: "m",
+      demandOption: false,
+      default: false,
+      description: "Generate metaboxes.php",
+    });
   }
 
   public handler(): void {
+    if (!this.args?.metaboxes as boolean) {
+      this.exludedStubs.push(/metaboxes.php/);
+      console.log(this.exludedStubs);
+    }
     super.handler();
-    // custom handler
   }
 }

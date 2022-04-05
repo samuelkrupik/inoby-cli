@@ -10,6 +10,7 @@ abstract class Command {
   public abstract signature: string;
   public abstract description: string;
   protected abstract stubPath: string;
+  protected exludedStubs: RegExp[] = [];
   protected outDir: string = "./";
   public enabled: boolean = true;
   public abstract arguments: CommandArgument[];
@@ -174,7 +175,14 @@ abstract class Command {
     return replaced;
   }
 
+  private isExcluded(file: string): boolean {
+    return !!this.exludedStubs.find((stub) => file.match(stub));
+  }
+
   protected replaceAndCreate(file: string): void {
+    // check if excluded
+    if (this.isExcluded(file)) return;
+
     let fileContents = fs.readFileSync(file).toString();
     const outPath = this.outPath(file);
     const outDir = path.dirname(outPath);
