@@ -1,0 +1,35 @@
+<?php
+/**
+ * Post-type {name.lower} metaboxes
+ */
+
+add_filter("rwmb_meta_boxes", function ($metaboxes) {
+  $prefix = "{post-type.dash}";
+
+  $extra_section_fields = [
+    [
+      "id" => "$prefix-extra-section-headline",
+      "type" => "text",
+      "name" => __("Nadpis", "inoby"),
+      "tab" => "extra-section",
+    ],
+  ];
+
+  $metaboxes[] = [
+      "id" => "{post-type.dash}",
+      "title" => __("Dodatočné informácie", "inoby"),
+      "post_types" => ["{post-type.dash}"],
+      "context" => "normal",
+      "priority" => "default",
+      "autosave" => "false",
+      "tab_style" => "left",
+      "tabs" => [
+          "extra-section" => [
+              "label" => __("Extra sekcia", "inoby"),
+          ],
+      ],
+      "fields" => [...$extra_section_fields],
+  ];
+
+  return $metaboxes;
+});
