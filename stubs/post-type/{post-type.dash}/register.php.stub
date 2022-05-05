@@ -19,8 +19,8 @@ if (!function_exists("inoby_register_post_type_{post-type.snake}")) {
         ];
 
         $args = [
-            "label" => __("Otázky", "inoby"),
-            "description" => __("Otázky popis", "inoby"),
+            "label" => __("{name.plural}", "inoby"),
+            "description" => __("{name.plural} popis", "inoby"),
             "labels" => $labels,
             "supports" => ["title", "excerpt", "editor"],
             "menu_icon" => "dashicons-format-status",

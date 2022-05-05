@@ -7,12 +7,12 @@ add_filter("rwmb_meta_boxes", function ($metaboxes) {
   $prefix = "{post-type.dash}";
 
   $extra_section_fields = [
-    [
-      "id" => "$prefix-extra-section-headline",
-      "type" => "text",
-      "name" => __("Nadpis", "inoby"),
-      "tab" => "extra-section",
-    ],
+    // [
+    //   "id" => "$prefix-extra-section-headline",
+    //   "type" => "text",
+    //   "name" => __("Nadpis", "inoby"),
+    //   "tab" => "extra-section",
+    // ],
   ];
 
   $metaboxes[] = [

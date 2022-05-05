@@ -8,12 +8,12 @@ add_filter("rwmb_meta_boxes", function ($metaboxes) {
     $prefix = "{page-template.dash}";
 
     $top_fields = [
-      [
-          "id" => "$prefix-top-headline",
-          "name" => __("Nadpis", "inoby"),
-          "type" => "text",
-          "tab" => "top",
-      ],
+    //   [
+    //     "id" => "$prefix-top-headline",
+    //     "name" => __("Nadpis", "inoby"),
+    //     "type" => "text",
+    //     "tab" => "top",
+    //   ],
     ];
 
     $metaboxes[] = [

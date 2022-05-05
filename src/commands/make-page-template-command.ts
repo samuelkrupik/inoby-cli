@@ -47,7 +47,8 @@ export default class extends Command {
   }
 
   private createIndex(): void {
-    const content = `<?php
+    const content = 
+    `<?php
 
 /**
  * Require all page-template files
