@@ -1,0 +1,16 @@
+import { InobyComponentModule } from "@lib/inoby-module";
+import * as $ from "jquery";
+
+class {component.pascal}Component extends InobyComponentModule {
+  public metaboxId: string = "{component.dash}";
+
+  public run() {
+    //
+  }
+
+  public runAdmin() {
+    //
+  }
+}
+
+new {component.pascal}Component().runOnReady();
