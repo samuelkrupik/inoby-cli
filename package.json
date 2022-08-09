@@ -1,5 +1,5 @@
 {
-  "name": "inoby",
+  "name": "inoby-cli",
   "version": "1.0.2",
   "description": "Boilerplate code generator",
   "main": "./build/index.js",
