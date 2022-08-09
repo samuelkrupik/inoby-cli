@@ -29,7 +29,7 @@ export class CodeGenerator {
     const args = await this.registerCommands();
 
     return args
-      .scriptName("code-generator")
+      .scriptName("inoby")
       .usage("$0 <cmd> [args]")
       .strict()
       .wrap(yargs.terminalWidth());

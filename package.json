@@ -1,14 +1,15 @@
 {
-  "name": "code-generator",
-  "version": "1.0.0",
-  "description": "Generates boilerplate code from template",
+  "name": "inoby",
+  "version": "1.0.1",
+  "description": "Boilerplate code generator",
   "main": "./build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "rm -rf ./build/* && tsc -w"
+    "watch": "rm -rf ./build/* && tsc -w",
+    "build": "rm -rf ./build/* && tsc"
   },
   "bin": {
-    "code-generator": "build/index"
+    "inoby": "./build/index.js"
   },
   "keywords": [],
   "author": "Samuel Krupik",
