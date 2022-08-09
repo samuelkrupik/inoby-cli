@@ -1,6 +1,6 @@
 {
   "name": "inoby",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Boilerplate code generator",
   "main": "./build/index.js",
   "scripts": {
