@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 
 export default class MakeComponentCommand extends Command {
-  public signature: string = "make:component <name>";
+  public signature: string = "make:component <component> <name>";
   public description: string = "Make metabox component";
   protected stubPath: string = "./stubs/component/";
   private indexPath: string = "";
