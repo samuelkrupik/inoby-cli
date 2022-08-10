@@ -1,6 +1,6 @@
 {
   "name": "inoby-cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Boilerplate code generator",
   "main": "./build/index.js",
   "scripts": {
