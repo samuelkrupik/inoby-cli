@@ -3,7 +3,7 @@
 class MB{component.pascal} extends MBComponentBase {
   protected function init_options($options) {
     $options->enabled = true;
-    $options->id = "{component.dash}";
+    $options->id = "inoby/{component.dash}";
     $options->title = __("{name}", "inoby");
     $options->icon = "fas fa-images";
     $options->render_template = get_theme_file_path("components/{component.dash}/template.php");

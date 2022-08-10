@@ -1,9 +1,9 @@
 <?php
 $heading = mb_get_block_field("heading");
-$component_id = uniqid("{component.dash}-");
+$component_id = uniqid("inoby-{component.dash}-");
 ?>
 
-<div <?= inoby_block_attrs($attributes, ["class" => "{component.dash}", "id" => $component_id]) ?>>
+<div <?= inoby_block_attrs($attributes, ["class" => "inoby-{component.dash}", "id" => $component_id]) ?>>
     <h1>
       <?= $heading ?>
     </h1>  
