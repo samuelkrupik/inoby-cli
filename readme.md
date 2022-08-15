@@ -71,8 +71,8 @@ inoby make:component <component> <name>
 
 **Arguments**
 
-- `<post-type>` Name of the post type to register in dash-case (e.g. post-type)
-- `<name>` Name of the post type to display (e.g. Post type)
+- `<component>` Name of the component in dash-case (e.g. product-slider)
+- `<name>` Name of the component (e.g. "Produktový slider")
 
 **Options**
 
