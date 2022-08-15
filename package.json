@@ -11,6 +11,10 @@
   "bin": {
     "inoby": "./build/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samuelkrupik/inoby-cli"
+  },
   "keywords": [],
   "author": "Samuel Krupik",
   "license": "ISC",
